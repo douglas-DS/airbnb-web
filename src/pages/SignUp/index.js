@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+
+import api from '../../services/api';
 
 import Logo from '../../assets/airbnb-logo.svg'; 
 
@@ -11,19 +13,25 @@ const SignUp = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    const handleSignUp = e => {
+    const handleSignUp = async e => {
         e.preventDefault();
-        alert('Eu vou te registrar');
-        alert(`${username}`);
-        alert(`${email}`);
-        alert(`${password}`);
-    }
+        if (!username || !email || !password) setError('Fill in all data to register');
+        else {
+            try {
+                await api.post('/users', { username, email, password });
+                this.props.history.push('/');
+            } catch(err) {
+                console.log(err);
+                setError('An error has occured. Please try again');
+            }
+        }
+    };
 
     return (
         <Container>
             <Form onSubmit={handleSignUp}>
                 <img src={Logo} alt="Airbnb logo" />
-                {error && <p>error</p>}
+                {error && <p>{error}</p>}
                 <input
                     type="text"
                     placeholder="Username"
@@ -47,4 +55,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp;
+export default withRouter(SignUp);
