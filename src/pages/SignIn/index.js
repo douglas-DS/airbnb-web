@@ -8,7 +8,7 @@ import { login } from '../../services/auth';
 import { Form, Container } from './styles';
 
 
- const SignIn = () => {
+ const SignIn = ({ history }) => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,7 +21,7 @@ import { Form, Container } from './styles';
             try {
                 const res = await api.post('/sessions', { email, password });
                 login(res.data.token);
-                this.PaymentResponse.history.push('/app');
+                history.push('/app');
             } catch(err) {
                 setError('An error occurred during login: Invalid credentials');
             }
