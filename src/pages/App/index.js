@@ -15,6 +15,7 @@ import api from '../../services/api';
 import Button from './components/Button';
 import Properties from './components/Properties/index';
 import AddProperty from '../AddProperty'
+import Property from '../Property'
 
 const TOKEN =
   "pk.eyJ1IjoiZG91Z2xhcy1kcyIsImEiOiJjazA2dnVxaGQwZXpoM2lxYmIxc2VqZGdtIn0.XQ5faRbBWkYmLjJaNdF-6w";
@@ -141,10 +142,17 @@ class Map extends Component {
                 </MapGL>
                 {this.renderActions()}
                 {this.renderButtonAdd()}
+
                 <ModalRoute 
                   path={`${match.url}/properties/add`}
                   parentPath={match.url}
                   component={AddProperty}
+                />
+                
+                <ModalRoute 
+                  path={`${match.url}/property/:id`}
+                  parentPath={match.url}
+                  component={Property}
                 />
           </>
     );
