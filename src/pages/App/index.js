@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from "react";
 import Dimensions from "react-dimensions";
-import { Container, ButtonContainer } from "./styles";
+import { Container, ButtonContainer, PointReference } from "./styles";
 import MapGL from "react-map-gl";
 import PropTypes from "prop-types";
 
@@ -40,7 +40,8 @@ class Map extends Component {
       bearing: 0,
       pitch: 0
     },
-    properties: []
+    properties: [],
+    addActivate: false
   };
 
   componentDidMount() {
@@ -68,19 +69,59 @@ class Map extends Component {
       this.props.history.push('/');
   }
 
+  handleAddProperty = () => {
+    const { match, history } = this.props;
+    const { latitude, longitude } = this.state.viewport;
+    history.push(
+      `${match.url}/properties/add?latitude=${latitude}&longitude=${longitude}`
+    );
+    this.setState({ addActivate: false });
+  }
+
   renderActions() {
       return (
-          <ButtonContainer>
-              <Button color="#222" onClick={this.handleLogout}>
-                <i className="fa fa-times" />
-              </Button>
-          </ButtonContainer>
+
+        <ButtonContainer>
+
+          <Button 
+            color="#fc6963" 
+            onClick={() => this.setState({ addActivate: true })}
+          >
+            <i className="fa fa-plus"/>
+          </Button>
+
+          <Button color="#222" onClick={this.handleLogout}>
+            <i className="fa fa-times" />
+          </Button>
+
+        </ButtonContainer>
       );
   }
 
+  renderButtonAdd() {
+    return (
+      this.state.addActivate && (
+        <PointReference>
+          <i className="fa fa-map-marker" />
+          <div>
+            <button onClick={this.handleAddProperty} type="button">
+              Adicionar
+            </button>
+            <button 
+              onClick={() => this.setState({ addActivate: false })} 
+              className="cancel"
+            >
+              Cancelar
+            </button>
+          </div>
+        </PointReference>
+      )
+    )
+  }
+
   render() {
-      const { containerWidth: width, containerHeight: height } = this.props;
-      const { properties } = this.state;
+      const { containerWidth: width, containerHeight: height, match } = this.props;
+      const { properties, addActivate } = this.state;
       return (
           <Fragment>
                <MapGL
@@ -93,8 +134,10 @@ class Map extends Component {
                     onViewStateChange={this.updatePropertiesLocalization.bind(this)}
                 >
                     <Properties properties={properties} />
+                    {!addActivate && <Properties match={match} properties={properties} />}
                 </MapGL>
                 {this.renderActions()}
+                {this.renderButtonAdd()}
           </Fragment>
     );
   }
