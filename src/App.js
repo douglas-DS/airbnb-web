@@ -4,9 +4,9 @@ import Routes from './routes';
 
 import { GlobalStyle } from './styles/global';
 
-const App = () => (
+const App = ({ history, context }) => (
     <>
-        <Routes />
+        <Routes history={history} context={context} />
         <GlobalStyle />
     </>
 );
