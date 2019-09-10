@@ -42,5 +42,6 @@ export const Container = styled.div`
   span {
     color: #fc6963;
     font-size: 20px;
+    padding-top: 10px;
   }
 `;
