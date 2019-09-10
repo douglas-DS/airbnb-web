@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Container, Images } from "./styles";
+import { Container, Images } from "./style";
 import PropTypes from "prop-types";
 
 import api from "../../services/api";
