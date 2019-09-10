@@ -1,10 +1,11 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import Dimensions from "react-dimensions";
 import { Container, ButtonContainer, PointReference } from "./styles";
 import MapGL from "react-map-gl";
 import PropTypes from "prop-types";
 
 import { withRouter } from 'react-router-dom';
+import { ModalRoute } from 'react-router-modal';
 
 import { logout } from '../../services/auth';
 
@@ -13,6 +14,7 @@ import api from '../../services/api';
 
 import Button from './components/Button';
 import Properties from './components/Properties/index';
+import AddProperty from '../AddProperty'
 
 const TOKEN =
   "pk.eyJ1IjoiZG91Z2xhcy1kcyIsImEiOiJjazA2dnVxaGQwZXpoM2lxYmIxc2VqZGdtIn0.XQ5faRbBWkYmLjJaNdF-6w";
@@ -123,7 +125,7 @@ class Map extends Component {
       const { containerWidth: width, containerHeight: height, match } = this.props;
       const { properties, addActivate } = this.state;
       return (
-          <Fragment>
+          <>
                <MapGL
                     width={width}
                     height={height}
@@ -138,7 +140,12 @@ class Map extends Component {
                 </MapGL>
                 {this.renderActions()}
                 {this.renderButtonAdd()}
-          </Fragment>
+                <ModalRoute 
+                  path={`${match.url}/properties/add`}
+                  parentPath={match.url}
+                  component={AddProperty}
+                />
+          </>
     );
   }
 
