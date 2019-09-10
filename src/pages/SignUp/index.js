@@ -7,7 +7,7 @@ import Logo from '../../assets/airbnb-logo.svg';
 
 import { Form, Container } from './styles';
 
-const SignUp = () => {
+const SignUp = ({ history }) => {
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,10 +19,10 @@ const SignUp = () => {
         else {
             try {
                 await api.post('/users', { username, email, password });
-                this.props.history.push('/');
+                history.push('/');
             } catch(err) {
                 console.log(err);
-                setError('An error has occured. Please try again');
+                setError('An error has occurred. Please try again');
             }
         }
     };
