@@ -23,6 +23,19 @@ class Map extends Component {
 
     constructor() {
         super();
+
+        this.state = {
+          viewport: {
+            latitude: -27.2108001,
+            longitude: -49.6446024,
+            zoom: 12.8,
+            bearing: 0,
+            pitch: 0
+          },
+          properties: [],
+          addActivate: false
+        };
+
         this.updatePropertiesLocalization = debounce(
             this.updatePropertiesLocalization, 
             500
@@ -32,18 +45,6 @@ class Map extends Component {
   static propTypes = {
     containerWidth: PropTypes.number.isRequired,
     containerHeight: PropTypes.number.isRequired
-  };
-
-  state = {
-    viewport: {
-      latitude: -27.2108001,
-      longitude: -49.6446024,
-      zoom: 12.8,
-      bearing: 0,
-      pitch: 0
-    },
-    properties: [],
-    addActivate: false
   };
 
   componentDidMount() {
