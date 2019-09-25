@@ -13,7 +13,7 @@ export const GlobalStyle = createGlobalStyle`
         background: #EEE;
         font-family: 'Helvetica Neue', 'Helvetica', Arial, sans-serif;
         text-rendering: optimizeLegibility !important;
-        -webkit-font-smoothing: atialiased !important;
+        -webkit-font-smoothing: antialiased !important;
         height: 100%;
         width: 100%;
     }
